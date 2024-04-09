@@ -1,0 +1,32 @@
+.logo {
+  color: #fff;
+}
+.header-container {
+  display: flex;
+  background-color: #181818;
+  justify-content: space-around;
+  padding: 20px;
+}
+.header-links-container {
+  display: flex;
+  align-items: center;
+}
+.header-text {
+  color: #f1f5f9;
+  margin: 10px;
+}
+.input-search {
+  padding: 5px;
+  margin: 10px;
+}
+.link {
+  text-decoration: none;
+  cursor: pointer;
+}
+.button-search {
+  padding: 7px;
+  background-color: #64748b;
+  color: #fff;
+  border: 0px;
+  border-radius: 5px;
+}
