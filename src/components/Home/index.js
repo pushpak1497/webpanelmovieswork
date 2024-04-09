@@ -5,6 +5,7 @@ import MovieItem from '../MovieItem'
 import Header from '../Header'
 
 import './index.css'
+import WebPanelContext from '../../context/WebPanelContext'
 
 class Home extends Component {
   state = {data: [], count: 1, isLoading: true}
@@ -20,6 +21,7 @@ class Home extends Component {
 `)
     const data = await response.json()
     const {results} = data
+
     this.setState({
       data: results,
       isLoading: false,
@@ -48,39 +50,56 @@ class Home extends Component {
   }
 
   render() {
-    const {data, isLoading} = this.state
+    return (
+      <WebPanelContext.Consumer>
+        {value => {
+          const {searchInput} = value
+          const {data, isLoading} = this.state
+          const filteredData = data.filter(each =>
+            each.original_title
+              .toLowerCase()
+              .includes(searchInput.toLowerCase()),
+          )
 
-    return isLoading ? (
-      <div className="loader-container">
-        <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
-      </div>
-    ) : (
-      <div className="bg-container">
-        <Header />
-        <ul className="list-container">
-          {data.map(each => (
-            <MovieItem details={each} key={each.id} />
-          ))}
-        </ul>
-        <div className="upcoming-button-container">
-          <button
-            type="button"
-            aria-label="button"
-            onClick={this.onClickDecrease}
-            className="pagination-button"
-          >
-            <IoChevronBack className="pagination-icon" />
-          </button>
-          <button
-            type="button"
-            aria-label="button"
-            onClick={this.onClickIncrease}
-            className="pagination-button"
-          >
-            <IoChevronForward className="pagination-icon" />
-          </button>
-        </div>
-      </div>
+          return isLoading ? (
+            <div className="loader-container">
+              <Loader type="ThreeDots" color="#ffffff" height="50" width="50" />
+            </div>
+          ) : (
+            <div className="bg-container">
+              <Header />
+              {filteredData.length === 0 ? (
+                <h3 className="no-results">No Results Found</h3>
+              ) : (
+                <ul className="list-container">
+                  {filteredData.map(each => (
+                    <MovieItem details={each} key={each.id} />
+                  ))}
+                </ul>
+              )}
+
+              <div className="upcoming-button-container">
+                <button
+                  type="button"
+                  aria-label="button"
+                  onClick={this.onClickDecrease}
+                  className="pagination-button"
+                >
+                  <IoChevronBack className="pagination-icon" />
+                </button>
+                <button
+                  type="button"
+                  aria-label="button"
+                  onClick={this.onClickIncrease}
+                  className="pagination-button"
+                >
+                  <IoChevronForward className="pagination-icon" />
+                </button>
+              </div>
+            </div>
+          )
+        }}
+      </WebPanelContext.Consumer>
     )
   }
 }

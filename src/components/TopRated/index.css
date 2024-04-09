@@ -8,6 +8,10 @@
   background-color: #000;
   min-height: 100vh;
 }
+.no-results {
+  text-align: center;
+  color: #fff;
+}
 .pagination-icon {
   color: #fff;
   height: 40px;

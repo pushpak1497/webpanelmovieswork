@@ -23,10 +23,12 @@
   text-decoration: none;
   cursor: pointer;
 }
-.button-search {
-  padding: 7px;
-  background-color: #64748b;
-  color: #fff;
-  border: 0px;
-  border-radius: 5px;
+
+@media only screen and (max-width: 767px) {
+  .input-search {
+    width: 50px;
+  }
+  .header-text {
+    font-size: 10px;
+  }
 }
